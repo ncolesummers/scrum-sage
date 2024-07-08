@@ -59,6 +59,7 @@ export function Sage({ anecdotes }: { anecdotes: anecdotes[] }) {
   return (
     <div className='w-full max-w-6xl mx-auto px-4 py-8 sm:px-6 md:py-12 lg:px-8'>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6'>
+        {/* TODO: Move finalAnecdotes logic into its own component */}
         {finalAnecdotes.map((anecdote) => {
           const formattedContent = anecdote.content.split('\n').map((line) => (
             <Fragment key={crypto.randomUUID()}>

@@ -23,7 +23,7 @@ const sanitizeTitle = (title: string) =>
 
 export default async function Home() {
   const date = new Date();
-  const recentDates = getRecentDates(date, 5);
+  const recentDates = getRecentDates(date, 10);
 
   const anecdotes: Anecdote[] = (
     await Promise.all(
