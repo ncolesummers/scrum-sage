@@ -38,7 +38,6 @@ interface anecdotes {
   title: string;
   date: string;
   content: string;
-  key: string;
 }
 
 export function Sage({ anecdotes }: { anecdotes: anecdotes[] }) {
@@ -62,10 +61,10 @@ export function Sage({ anecdotes }: { anecdotes: anecdotes[] }) {
         {/* TODO: Move finalAnecdotes logic into its own component */}
         {finalAnecdotes.map((anecdote) => {
           const formattedContent = anecdote.content.split('\n').map((line) => (
-            <Fragment key={crypto.randomUUID()}>
+            <>
               {line}
-              <br />
-            </Fragment>
+              <br key={crypto.randomUUID()} />
+            </>
           ));
           return (
             <Card key={anecdote.key} className='w-full'>
