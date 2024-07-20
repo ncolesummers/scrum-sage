@@ -21,16 +21,16 @@ export async function fetchPosts(page: number) : Promise<Anecdote[]> {
     return date.toISOString().split('T')[0];
   });
   // Retrieve 10 posts from Vercel KV based on the page number
-  const posts: Promise<Anecdote[]> = await Promise.all(
+  const posts = await Promise.all(
     Array.from({ length: 10 }, (_, i) => {
       const key = `anecdote:${postDates[i]}`;
       return kv.get(key);
     })
   )
-  .then((posts) => posts.map((post: string, i: number) => {
+  .then((posts) => posts.map((post: unknown, i: number) => {
     if (post) {
 
-      const [title, ...content] = post?.split('\n');
+      const [title, ...content] = (post as string)?.split('\n') ?? [];
       return {
         key: post,
         date: postDates[i],
@@ -39,7 +39,7 @@ export async function fetchPosts(page: number) : Promise<Anecdote[]> {
       };
     }
   })
-  .filter((post: Anecdote) => (post !== null && post !== undefined))
+  .filter((post) => (post !== null && post !== undefined))
   );
   console.log('server action fetchPosts', posts);
   return posts;
