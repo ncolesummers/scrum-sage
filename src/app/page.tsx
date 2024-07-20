@@ -1,53 +1,60 @@
-import { kv } from '@vercel/kv';
+'use client'
 import { Sage } from '@/components/Sage';
+import { fetchPosts } from './actions';
+import { useCallback, useEffect, useState } from 'react';
 
 interface Anecdote {
   title: string;
   date: string;
   content: string;
-  key: string;
 }
 
-function getRecentDates(date: Date, numDays: number) {
-  const dates = [];
-  for (let i = 0; i < numDays; i++) {
-    const d = new Date(date);
-    d.setDate(d.getDate() - i);
-    dates.push(d.toISOString().split('T')[0]);
-  }
-  return dates;
-}
+export default function Home() {
+  const [page, setPage] = useState(0);
+  const [posts, setPosts] = useState<Set<Anecdote>>(new Set());
+  const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
 
-const sanitizeTitle = (title: string) =>
-  title.replaceAll(/[*#]/g, '').replace('Title: ', '');
+  const loadMorePosts = useCallback(async () => {
+    if (loading || !hasMore) return;
 
-export default async function Home() {
-  const date = new Date();
-  const recentDates = getRecentDates(date, 10);
+    setLoading(true);
+    const newPosts = await fetchPosts(page);
+  
 
-  const anecdotes: Anecdote[] = (
-    await Promise.all(
-      recentDates.map(async (date) => {
-        const key = `anecdote:${date}`;
-        const anecdote: string | null = await kv.get(key);
-        if (anecdote !== null) {
-          return {
-            key,
-            date,
-            title: sanitizeTitle(anecdote?.split('\n')[0]) || 'Anecdote',
-            content: anecdote?.split('\n').slice(1).join('\n'),
-          };
-        }
-      })
-    )
-  ).filter((anecdote): anecdote is Anecdote => anecdote !== undefined);
+    if (newPosts.length === 0) {
+      setHasMore(false);
+    } else {
+      const mergedPosts = posts.union(new Set(newPosts));
+      setPosts(mergedPosts);
+      setPage((prevPage: number) => prevPage + 1);
+    }
+
+    setLoading(false);
+  }, [loading, hasMore, page, posts]);
+
+  useEffect(() => {
+    loadMorePosts();
+  }, [loadMorePosts]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500) {
+        loadMorePosts();
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [loadMorePosts]);
 
   return (
     <main className='container'>
       <div>
         <h1 className='m-3'>Scrum Sage</h1>
       </div>
-      <Sage anecdotes={anecdotes} />
+      <Sage anecdotes={Array.from(posts)} />
+      {loading && <p>Loading...</p>}
     </main>
   );
 }
