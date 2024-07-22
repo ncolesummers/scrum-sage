@@ -95,92 +95,13 @@ export function Sage({ anecdotes }: { anecdotes: anecdotes[] }) {
 							</Card>
 						);
 					})}
-					{/* <Card className="w-full">
-						<CardHeader>
-							<CardTitle>The Prodigal Son</CardTitle>
-							<CardDescription>April 12, 2024</CardDescription>
-						</CardHeader>
-						<CardContent className="text-muted-foreground">
-							<p>
-								A man had two sons. The younger son asked his father for his
-								inheritance, and the father divided his property between them.
-								The younger son went away and squandered his wealth in wild
-								living. When he had spent everything, a severe famine struck the
-								land, and he began to be in need. He decided to return to his
-								father and ask to be hired as a servant. But when he was still a
-								long way off, his father saw him and was filled with compassion.
-								He ran to his son, threw his arms around him and kissed him. The
-								father said to his servants, "Bring the best\n robe and put it
-								on him. Put a ring on his finger and sandals on\n his feet.
-								Bring the fattened calf and kill it. Let's have a\n feast and
-								celebrate. For this son of mine was dead and is alive\n again;
-								he was lost and is found."
-							</p>
-						</CardContent>
-						<CardFooter className="flex justify-end">
-							<Button variant="ghost" size="icon">
-								<ShareIcon className="w-4 h-4" />
-								<span className="sr-only">Share</span>
-							</Button>
-						</CardFooter>
-					</Card>
-					<Card className="w-full">
-						<CardHeader>
-							<CardTitle>The Good Samaritan</CardTitle>
-							<CardDescription>April 5, 2024</CardDescription>
-						</CardHeader>
-						<CardContent className="text-muted-foreground">
-							<p>
-								A man was going down from Jerusalem to Jericho, when he was
-								attacked by robbers. They stripped him of his clothes, beat him
-								and went away, leaving him half dead. A priest happened to be
-								going down the same road, and when he saw the man, he passed by
-								on the other side. So too, a Levite, when he came to the place
-								and saw him, passed by on the other side. But a Samaritan, as he
-								traveled, came where the man was; and when he saw him, he took
-								pity on him. He went to him and bandaged his wounds, pouring on
-								oil and wine. Then he put the man on his own donkey, brought him
-								to an inn and took care of him. The next day he took out two
-								denarii and gave them to the innkeeper. "Look\n after him," he
-								said, "and when I return, I will reimburse you\n for any extra
-								expense you may have."
-							</p>
-						</CardContent>
-						<CardFooter className="flex justify-end">
-							<Button variant="ghost" size="icon">
-								<ShareIcon className="w-4 h-4" />
-								<span className="sr-only">Share</span>
-							</Button>
-						</CardFooter>
-					</Card>
-					<Card className="w-full">
-						<CardHeader>
-							<CardTitle>The Mustard Seed</CardTitle>
-							<CardDescription>March 29, 2024</CardDescription>
-						</CardHeader>
-						<CardContent className="text-muted-foreground">
-							<p>
-								Jesus told them another parable: "The kingdom of heaven is
-								like\n a mustard seed, which a man took and planted in his
-								field.\n Though it is the smallest of all seeds, yet when it
-								grows, it\n is the largest of garden plants and becomes a tree,
-								so that the\n birds come and perch in its branches."
-							</p>
-						</CardContent>
-						<CardFooter className="flex justify-end">
-							<Button variant="ghost" size="icon">
-								<ShareIcon className="w-4 h-4" />
-								<span className="sr-only">Share</span>
-							</Button>
-						</CardFooter>
-					</Card> */}
 				</div>
 			</div>
 		</div>
 	);
 }
 
-function ShareIcon(props) {
+function ShareIcon(props: React.SVGProps<SVGSVGElement>) {
 	return (
 		<svg
 			{...props}
@@ -201,7 +122,7 @@ function ShareIcon(props) {
 	);
 }
 
-function XIcon(props) {
+function XIcon(props: React.SVGProps<SVGSVGElement>) {
 	return (
 		<svg
 			{...props}

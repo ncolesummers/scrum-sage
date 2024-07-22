@@ -1,5 +1,5 @@
 "use client";
-import { Sage } from "@/components/sage";
+import { Sage } from "@/components/Sage";
 import { fetchPosts } from "./actions";
 import { useCallback, useEffect, useState } from "react";
 
