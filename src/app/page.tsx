@@ -53,7 +53,7 @@ export default function Home() {
 	return (
 		<main>
 			<Sage anecdotes={Array.from(posts)} />
-			{loading && <p>Loading...</p>}
+			{loading && <p className="mx-auto">Loading...</p>}
 		</main>
 	);
 }
