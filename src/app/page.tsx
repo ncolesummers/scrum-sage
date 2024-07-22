@@ -1,60 +1,59 @@
-'use client'
-import { Sage } from '@/components/Sage';
-import { fetchPosts } from './actions';
-import { useCallback, useEffect, useState } from 'react';
+"use client";
+import { Sage } from "@/components/sage";
+import { fetchPosts } from "./actions";
+import { useCallback, useEffect, useState } from "react";
 
 interface Anecdote {
-  title: string;
-  date: string;
-  content: string;
+	title: string;
+	date: string;
+	content: string;
 }
 
 export default function Home() {
-  const [page, setPage] = useState(0);
-  const [posts, setPosts] = useState<Set<Anecdote>>(new Set());
-  const [loading, setLoading] = useState(false);
-  const [hasMore, setHasMore] = useState(true);
+	const [page, setPage] = useState(0);
+	const [posts, setPosts] = useState<Set<Anecdote>>(new Set());
+	const [loading, setLoading] = useState(false);
+	const [hasMore, setHasMore] = useState(true);
 
-  const loadMorePosts = useCallback(async () => {
-    if (loading || !hasMore) return;
+	const loadMorePosts = useCallback(async () => {
+		if (loading || !hasMore) return;
 
-    setLoading(true);
-    const newPosts = await fetchPosts(page);
-  
+		setLoading(true);
+		const newPosts = await fetchPosts(page);
 
-    if (newPosts.length === 0) {
-      setHasMore(false);
-    } else {
-      const mergedPosts = posts.union(new Set(newPosts));
-      setPosts(mergedPosts);
-      setPage((prevPage: number) => prevPage + 1);
-    }
+		if (newPosts.length === 0) {
+			setHasMore(false);
+		} else {
+			const mergedPosts = posts.union(new Set(newPosts));
+			setPosts(mergedPosts);
+			setPage((prevPage: number) => prevPage + 1);
+		}
 
-    setLoading(false);
-  }, [loading, hasMore, page, posts]);
+		setLoading(false);
+	}, [loading, hasMore, page, posts]);
 
-  useEffect(() => {
-    loadMorePosts();
-  }, [loadMorePosts]);
+	useEffect(() => {
+		loadMorePosts();
+	}, [loadMorePosts]);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500) {
-        loadMorePosts();
-      }
-    };
+	useEffect(() => {
+		const handleScroll = () => {
+			if (
+				window.innerHeight + window.scrollY >=
+				document.body.offsetHeight - 500
+			) {
+				loadMorePosts();
+			}
+		};
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [loadMorePosts]);
+		window.addEventListener("scroll", handleScroll);
+		return () => window.removeEventListener("scroll", handleScroll);
+	}, [loadMorePosts]);
 
-  return (
-    <main className='container'>
-      <div>
-        <h1 className='m-3'>Scrum Sage</h1>
-      </div>
-      <Sage anecdotes={Array.from(posts)} />
-      {loading && <p>Loading...</p>}
-    </main>
-  );
+	return (
+		<main className="container mx-auto">
+			<Sage anecdotes={Array.from(posts)} />
+			{loading && <p>Loading...</p>}
+		</main>
+	);
 }
