@@ -51,7 +51,7 @@ export default function Home() {
 	}, [loadMorePosts]);
 
 	return (
-		<main className="container mx-auto">
+		<main>
 			<Sage anecdotes={Array.from(posts)} />
 			{loading && <p>Loading...</p>}
 		</main>
