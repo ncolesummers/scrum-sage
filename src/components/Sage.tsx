@@ -49,7 +49,8 @@ export function Sage({ anecdotes }: { anecdotes: anecdotes[] }) {
 				...anecdote,
 				key: crypto.randomUUID(),
 				// The Title field contains Markdown Asterisks and the prefix `Title: `. We remove them.
-				title: anecdote.title.replaceAll(/[*#]/g, "").replace("Title: ", ""),
+				// We also remove the hash symbol and double quotes.
+				title: anecdote.title.replaceAll(/[*#"]/g, "").replace("Title: ", ""),
 			};
 		});
 
