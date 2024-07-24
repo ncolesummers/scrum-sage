@@ -1,4 +1,4 @@
-'use server'
+'use server';
 
 import { kv } from '@vercel/kv';
 
@@ -11,8 +11,7 @@ interface Anecdote {
 const sanitizeTitle = (title: string) =>
   title.replaceAll(/[*#]/g, '').replace('Title: ', '');
 
-
-export async function fetchPosts(page: number) : Promise<Anecdote[]> {
+export async function fetchPosts(page: number): Promise<Anecdote[]> {
   // Generate 10 dates based on the page number
   const postDates = Array.from({ length: 10 }, (_, i) => {
     const daysAgo = page * 10 + i;
@@ -26,21 +25,20 @@ export async function fetchPosts(page: number) : Promise<Anecdote[]> {
       const key = `anecdote:${postDates[i]}`;
       return kv.get(key);
     })
-  )
-  .then((posts) => posts.map((post: unknown, i: number) => {
-    if (post) {
-
-      const [title, ...content] = (post as string)?.split('\n') ?? [];
-      return {
-        key: post,
-        date: postDates[i],
-        title: sanitizeTitle(title) || 'Anecdote',
-        content: content.join('\n'),
-      };
-    }
-  })
-  .filter((post) => (post !== null && post !== undefined))
+  ).then((posts) =>
+    posts
+      .map((post: unknown, i: number) => {
+        if (post) {
+          const [title, ...content] = (post as string)?.split('\n') ?? [];
+          return {
+            key: post,
+            date: postDates[i],
+            title: sanitizeTitle(title) || 'Anecdote',
+            content: content.join('\n'),
+          };
+        }
+      })
+      .filter((post) => post !== null && post !== undefined)
   );
-  console.log('server action fetchPosts', posts);
   return posts;
 }
