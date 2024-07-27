@@ -22,7 +22,6 @@ export default function Home() {
 		if (loading || !hasMore) return;
 
 		setLoading(true);
-		console.info("Loading more posts...");
 		const newPosts = await fetchPosts(page);
 
 		if (newPosts.length === 0) {
@@ -58,6 +57,12 @@ export default function Home() {
 		window.addEventListener("scroll", handleScroll);
 		return () => window.removeEventListener("scroll", handleScroll);
 	}, [loadMorePosts]);
+
+	useEffect(() => {
+		if (selected) {
+			window.scrollTo(0, 0);
+		}
+	}, [selected]);
 
 	if (selected) {
 		return (
