@@ -28,11 +28,13 @@ export default function Home() {
 		if (newPosts.length === 0) {
 			setHasMore(false);
 		} else {
-			const newPostMap = new Map(posts);
-			for (const post of newPosts) {
-				newPostMap.set(post.date, post);
-			}
-			setPosts(newPostMap);
+			setPosts(prevPosts => {
+				const newPostMap = new Map(prevPosts);
+				for (const post of newPosts) {
+					newPostMap.set(post.date, post);
+				}
+				return newPostMap;
+			});
 			setPage(prevPage => prevPage + 1);
 		}
 
