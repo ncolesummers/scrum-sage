@@ -39,7 +39,7 @@ export default function Home() {
 		}
 
 		setLoading(false);
-	}, [loading, hasMore, page, posts]);
+	}, [loading, hasMore, page]);
 
 	useEffect(() => {
 		loadMorePosts();
@@ -58,8 +58,6 @@ export default function Home() {
 		window.addEventListener("scroll", handleScroll);
 		return () => window.removeEventListener("scroll", handleScroll);
 	}, [loadMorePosts]);
-
-	console.info("Posts:", posts.size);
 
 	if (selected) {
 		return (
