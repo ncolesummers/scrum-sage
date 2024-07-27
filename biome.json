@@ -8,5 +8,18 @@
 		"rules": {
 			"recommended": true
 		}
+	},
+	"formatter": {
+		"enabled": true,
+		"indentWidth": 2
+	},
+	"javascript": {
+		"formatter": {
+			"indentWidth": 2,
+			"arrowParentheses": "asNeeded",
+			"quoteProperties": "asNeeded",
+			"semicolons": "always",
+			"trailingCommas": "all"
+		}
 	}
 }
