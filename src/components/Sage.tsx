@@ -45,7 +45,7 @@ export function Sage({
 		.sort((a, b) => {
 			return new Date(b.date).getTime() - new Date(a.date).getTime();
 		})
-		.map((anecdote) => {
+		.map(anecdote => {
 			return {
 				...anecdote,
 				key: crypto.randomUUID(),
@@ -57,7 +57,7 @@ export function Sage({
 
 	return (
 		<div className="w-full">
-			<section className="w-full bg-primary py-20 px-4 sm:px-6 md:py-32 lg:px-8">
+			<section className="w-full bg-primary py-24 px-4 sm:px-6 md:py-32 lg:px-8">
 				<div className="mx-auto max-w-6xl">
 					<h1 className="text-4xl font-bold tracking-[0.05em] text-primary-foreground sm:text-5xl lg:text-6xl">
 						Scrum Sage
