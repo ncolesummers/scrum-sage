@@ -75,7 +75,7 @@ export default function Home() {
 	return (
 		<main>
 			<Sage setSelected={setSelected} anecdotes={Array.from(posts.values())} />
-			{loading && <p className="mx-auto">Loading...</p>}
+			{loading && <p className="mx-auto text-center">Loading...</p>}
 		</main>
 	);
 }
